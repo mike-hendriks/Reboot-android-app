@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "605347104600",
+    "firebase_url": "https://reboot-abaa4.firebaseio.com",
+    "project_id": "reboot-abaa4",
+    "storage_bucket": "reboot-abaa4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605347104600:android:3baf621346c15368",
+        "android_client_info": {
+          "package_name": "com.example.reboot.reboot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605347104600-ba6u1ddi0k6msacfn1onmohsj6aqbhq5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.reboot.reboot",
+            "certificate_hash": "8dbb84d85b9a222da9829ec14323b099abd83520"
+          }
+        },
+        {
+          "client_id": "605347104600-avdv3v41989hf7e8tk2e5fp9n6v9scq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHsF9AMFAcdFU11o3c1l44ABKKkknfVpU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605347104600-avdv3v41989hf7e8tk2e5fp9n6v9scq9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

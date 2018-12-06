@@ -4,13 +4,25 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
+
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mConditionRef = mRootRef.child("testData");
 
     private TextView xText, yText, zText, iText;
     private Sensor mySensor;
@@ -57,4 +69,36 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
+// DIT IS CODE IK HEB GEBRUIK ALS TEST VOOR DATABASE.
+// ZIE MAAR ALS JE HET KAN COMBINEREN MET JE PROJECT ;)
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        mConditionRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String text = dataSnapshot.getValue(String.class);
+//                mTextResult.setText(text);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//
+//        btnSend.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                String send = mPlainText.getText().toString();
+//
+//                mConditionRef.setValue(send);
+//                Log.d(send, "onClick: , ");
+//            }
+//        });
+//    }
 }
