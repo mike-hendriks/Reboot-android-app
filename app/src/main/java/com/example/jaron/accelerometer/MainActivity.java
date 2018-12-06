@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,11 +25,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("testData");
 
-    private TextView xText, yText, zText, iText;
+    private TextView xText, yText, zText, iText, mTextResult;
     private Sensor mySensor;
     private SensorManager SM;
     int i = 0;
     private boolean still_in_range = false;
+    private Button btnSend;
 
 
     @Override
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         zText = (TextView)findViewById(R.id.idZ);
         yText = (TextView)findViewById(R.id.idY);
         iText = (TextView)findViewById(R.id.idI);
+        mTextResult = (TextView)findViewById(R.id.Database);
+        btnSend = (Button)findViewById(R.id.btnSendSitUps);
     }
 
     @Override
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             if(still_in_range == false) {
                 i++;
-                iText.setText("Sit ups: " + i);
+                iText.setText(String.valueOf(i));
                 still_in_range = true;
             }
         }else {
@@ -70,35 +74,34 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-// DIT IS CODE IK HEB GEBRUIK ALS TEST VOOR DATABASE.
-// ZIE MAAR ALS JE HET KAN COMBINEREN MET JE PROJECT ;)
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//        mConditionRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String text = dataSnapshot.getValue(String.class);
-//                mTextResult.setText(text);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//
-//        btnSend.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                String send = mPlainText.getText().toString();
-//
-//                mConditionRef.setValue(send);
-//                Log.d(send, "onClick: , ");
-//            }
-//        });
-//    }
+    //  CODE voor DATABASE.
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mConditionRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String text = dataSnapshot.getValue(String.class);
+                mTextResult.setText(text);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String send = iText.getText().toString();
+
+                mConditionRef.setValue(send);
+                Log.d(send, "onClick: , ");
+            }
+        });
+    }
 }
