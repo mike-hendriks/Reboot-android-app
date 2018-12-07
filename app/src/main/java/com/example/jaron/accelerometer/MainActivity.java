@@ -25,11 +25,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("testData");
 
-    private TextView xText, yText, zText, iText, mTextResult;
+    private TextView xText, yText, zText, iText, jText, mTextResult;
     private Sensor mySensor;
     private SensorManager SM;
-    int i = 0;
-    private boolean still_in_range = false;
+    int i, j = 0;
+    private boolean still_in_range, start_pushup = false;
     private Button btnSend;
 
 
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         zText = (TextView)findViewById(R.id.idZ);
         yText = (TextView)findViewById(R.id.idY);
         iText = (TextView)findViewById(R.id.idI);
+        jText = (TextView)findViewById(R.id.idJ);
         mTextResult = (TextView)findViewById(R.id.Database);
         btnSend = (Button)findViewById(R.id.btnSendSitUps);
     }
@@ -67,6 +68,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             still_in_range = false;
         }
 
+        //werkt nog niet goed
+
+        if(event.values[2] > 9.9 || start_pushup)
+        {
+            if(event.values[2] < 9)
+            {
+                j++;
+                jText.setText(String.valueOf(j));
+                start_pushup = false;
+            }
+            else
+            {
+                start_pushup = true;
+            }
+        }
     }
 
     @Override

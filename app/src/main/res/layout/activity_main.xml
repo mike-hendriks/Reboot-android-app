@@ -8,6 +8,31 @@
     tools:layout_editor_absoluteY="25dp">
 
     <TextView
+        android:id="@+id/idJ"
+        android:layout_width="63dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="8dp"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.146"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/idX" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="8dp"
+        android:text="Push ups:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idX" />
+
+    <TextView
         android:id="@+id/idZ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,10 +79,11 @@
         android:id="@+id/btnSendSitUps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
         android:text="Send"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -77,11 +103,11 @@
         android:id="@+id/Database"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="9dp"
-        android:layout_marginTop="32dp"
         android:text="In de database staat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSendSitUps" />
 </android.support.constraint.ConstraintLayout>
