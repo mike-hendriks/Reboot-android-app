@@ -4,6 +4,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.icu.util.Calendar;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,12 +22,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mConditionRef = mRootRef.child("testData");
+    DatabaseReference mConditionRef = mRootRef.child("workout");
 
-    private TextView xText, yText, zText, iText, jText, mTextResult;
+    private TextView xText, yText, zText, iText, jText;
     private Sensor mySensor;
     private SensorManager SM;
     int i, j = 0;
@@ -47,8 +51,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         yText = (TextView)findViewById(R.id.idY);
         iText = (TextView)findViewById(R.id.idI);
         jText = (TextView)findViewById(R.id.idJ);
-        mTextResult = (TextView)findViewById(R.id.Database);
-        btnSend = (Button)findViewById(R.id.btnSendSitUps);
+        btnSend = (Button)findViewById(R.id.btnAddWorkout);
     }
 
     @Override
@@ -98,8 +101,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mConditionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String text = dataSnapshot.getValue(String.class);
-                mTextResult.setText(text);
+
             }
 
             @Override
@@ -113,11 +115,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             @Override
             public void onClick(View v) {
-                String send = iText.getText().toString();
-
-                mConditionRef.setValue(send);
-                Log.d(send, "onClick: , ");
+                VoegWorkoutToe();
             }
         });
+    }
+
+    public void VoegWorkoutToe() {
+
+        final Workout Wo = new Workout();
+
+        Wo.setId("3");
+        Wo.setDate("vandaag");
+        Wo.setExercise("");
+
+        String key = mConditionRef.push().getKey();
+        Workout workout = new Workout(Wo.getId(), Wo.getDate(), Wo.getExercise());
+        mConditionRef.child(key).setValue(workout);
+
+        Toast.makeText(getApplicationContext(), "Toegvoegd", Toast.LENGTH_SHORT).show();
     }
 }
