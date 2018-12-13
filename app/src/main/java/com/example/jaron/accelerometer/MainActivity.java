@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     int i, j = 0;
     private boolean still_in_range, start_pushup = false;
     private Button btnSend;
+    final Workout Wo = new Workout();
 
 
     @Override
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if(still_in_range == false) {
                 i++;
                 iText.setText(String.valueOf(i));
+                mConditionRef.child("1").child("exercise").child("sit_ups").setValue(i);
                 still_in_range = true;
             }
         }else {
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             {
                 j++;
                 jText.setText(String.valueOf(j));
+                mConditionRef.child("1").child("exercise").child("push_ups").setValue(j);
                 start_pushup = false;
             }
             else
@@ -120,18 +127,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
     }
 
-    public void VoegWorkoutToe() {
-
-        final Workout Wo = new Workout();
+    public void VoegWorkoutToe()
+    {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy");
 
         Wo.setId("3");
-        Wo.setDate("vandaag");
+        Wo.setDate(mdformat.format(calendar.getTime()));
         Wo.setExercise("");
 
-        String key = mConditionRef.push().getKey();
         Workout workout = new Workout(Wo.getId(), Wo.getDate(), Wo.getExercise());
-        mConditionRef.child(key).setValue(workout);
+        mConditionRef.child("1").setValue(workout);
 
-        Toast.makeText(getApplicationContext(), "Toegvoegd", Toast.LENGTH_SHORT).show();
+        mConditionRef.child("1").child("exercise").child("push_ups").setValue(j);
+        mConditionRef.child("1").child("exercise").child("sit_ups").setValue(i);
+
+        Toast.makeText(getApplicationContext(), "Toegevoegd", Toast.LENGTH_SHORT).show();
     }
 }
