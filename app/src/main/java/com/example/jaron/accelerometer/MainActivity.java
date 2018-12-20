@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager SM;
     int i, j = 0;
     private boolean still_in_range, start_pushup = false;
-    private Button btnSend, btnSitup, btnPushup;
+    private Button btnSend, btnSitup, btnPushup, btnOefen;
     final Workout Wo = new Workout();
 
 
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btnSend = (Button)findViewById(R.id.btnAddWorkout);
         btnSitup = (Button)findViewById(R.id.btnSitup);
         btnPushup = (Button)findViewById(R.id.btnPushup);
+        btnOefen = (Button)findViewById(R.id.button);
     }
 
     @Override
