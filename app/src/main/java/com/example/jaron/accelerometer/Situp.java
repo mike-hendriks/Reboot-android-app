@@ -1,6 +1,5 @@
 package com.example.jaron.accelerometer;
 
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -22,24 +21,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener{
+public class Situp extends AppCompatActivity  implements SensorEventListener {
 
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
 
-    private TextView xText, yText, zText, iText, jText;
+    private TextView xText, yText, zText, iText;
     private Sensor mySensor;
     private SensorManager SM;
-    int i, j = 0;
-    private boolean still_in_range, start_pushup = false;
-    private Button btnSend, btnSitup, btnPushup;
+    int i = 0;
+    private boolean still_in_range;
+    private Button btnSend;
     final Workout Wo = new Workout();
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_situp);
 
         SM = (SensorManager)getSystemService(SENSOR_SERVICE);
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -49,10 +47,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         zText = (TextView)findViewById(R.id.idZ);
         yText = (TextView)findViewById(R.id.idY);
         iText = (TextView)findViewById(R.id.idI);
-        jText = (TextView)findViewById(R.id.idJ);
         btnSend = (Button)findViewById(R.id.btnAddWorkout);
-        btnSitup = (Button)findViewById(R.id.btnSitup);
-        btnPushup = (Button)findViewById(R.id.btnPushup);
     }
 
     @Override
@@ -72,71 +67,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }else {
             still_in_range = false;
         }
-
-        //werkt nog niet goed
-
-        if(event.values[2] > 9.9 || start_pushup)
-        {
-            if(event.values[2] < 9)
-            {
-                j++;
-                jText.setText(String.valueOf(j));
-                mConditionRef.child("1").child("exercise").child("push_ups").setValue(j);
-                start_pushup = false;
-            }
-            else
-            {
-                start_pushup = true;
-            }
-        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
-    //  CODE voor DATABASE.
     @Override
     protected void onStart() {
         super.onStart();
-
-        mConditionRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
         btnSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 VoegWorkoutToe();
-            }
-        });
-
-        btnSitup.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Situp.class);
-                startActivity(intent);
-            }
-        });
-
-        btnPushup.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Pushup .class);
-                startActivity(intent);
             }
         });
     }
@@ -153,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Workout workout = new Workout(Wo.getId(), Wo.getDate(), Wo.getExercise());
         mConditionRef.child("1").setValue(workout);
 
-        mConditionRef.child("1").child("exercise").child("push_ups").setValue(j);
         mConditionRef.child("1").child("exercise").child("sit_ups").setValue(i);
 
         Toast.makeText(getApplicationContext(), "Toegevoegd", Toast.LENGTH_SHORT).show();
