@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,13 +33,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager SM;
     int i, j = 0;
     private boolean still_in_range, start_pushup = false;
-    private Button btnSend, btnSitup, btnPushup, btnOefen;
+    private Button btnSend, btnSitup, btnPushup, btnOefen, btnLogin;
     final Workout Wo = new Workout();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
         setContentView(R.layout.activity_main);
 
         SM = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btnSend = (Button)findViewById(R.id.btnAddWorkout);
         btnSitup = (Button)findViewById(R.id.btnSitup);
         btnPushup = (Button)findViewById(R.id.btnPushup);
-        btnOefen = (Button)findViewById(R.id.button);
+        btnLogin = (Button)findViewById(R.id.btnLogin);
     }
 
     @Override
@@ -137,6 +142,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Pushup .class);
+                startActivity(intent);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
