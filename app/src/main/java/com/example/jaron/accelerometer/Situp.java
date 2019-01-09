@@ -27,13 +27,13 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
 
-    private TextView xText, yText, zText, iText;
+    /*private TextView xText, yText, zText, iText;
     private Sensor mySensor;
     private SensorManager SM;
     int i = 0;
     private boolean still_in_range;
     private Button btnSend;
-    final Workout Wo = new Workout();
+    final Workout Wo = new Workout();*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         );
         setContentView(R.layout.activity_situp);
 
-        SM = (SensorManager)getSystemService(SENSOR_SERVICE);
+        /*SM = (SensorManager)getSystemService(SENSOR_SERVICE);
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
@@ -52,12 +52,12 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         zText = (TextView)findViewById(R.id.idZ);
         yText = (TextView)findViewById(R.id.idY);
         iText = (TextView)findViewById(R.id.idI);
-        btnSend = (Button)findViewById(R.id.btnAddWorkout);
+        btnSend = (Button)findViewById(R.id.btnAddWorkout);*/
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        xText.setText("X: " + event.values[0]);
+        /*xText.setText("X: " + event.values[0]);
         yText.setText("Y: " + event.values[1]);
         zText.setText("Z: " + event.values[2]);
 
@@ -71,7 +71,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
             }
         }else {
             still_in_range = false;
-        }
+        }*/
     }
 
     @Override
@@ -81,18 +81,18 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
     @Override
     protected void onStart() {
         super.onStart();
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        /*btnSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 VoegWorkoutToe();
             }
-        });
+        });*/
     }
 
     public void VoegWorkoutToe()
     {
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy");
 
         Wo.setId("3");
@@ -104,6 +104,6 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
 
         mConditionRef.child("1").child("exercise").child("sit_ups").setValue(i);
 
-        Toast.makeText(getApplicationContext(), "Toegevoegd", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Toegevoegd", Toast.LENGTH_SHORT).show();*/
     }
 }

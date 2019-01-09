@@ -27,13 +27,13 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
 
-    private TextView xText, yText, zText, jText;
-    private Sensor mySensor;
-    private SensorManager SM;
-    int j = 0;
-    private boolean start_pushup = false;
-    private Button btnSend;
-    final Workout Wo = new Workout();
+    //private TextView xText, yText, zText, jText;
+    //private Sensor mySensor;
+    //private SensorManager SM;
+    //int j = 0;
+    //private boolean start_pushup = false;
+    //private Button btnSend;
+    //final Workout Wo = new Workout();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,26 +44,26 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         );
         setContentView(R.layout.activity_pushup);
 
-        SM = (SensorManager)getSystemService(SENSOR_SERVICE);
-        mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        //SM = (SensorManager)getSystemService(SENSOR_SERVICE);
+        //mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        //SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
-        xText = (TextView)findViewById(R.id.idX);
-        zText = (TextView)findViewById(R.id.idZ);
-        yText = (TextView)findViewById(R.id.idY);
-        jText = (TextView)findViewById(R.id.idJ);
-        btnSend = (Button)findViewById(R.id.btnAddWorkout);
+        //xText = (TextView)findViewById(R.id.idX);
+        //zText = (TextView)findViewById(R.id.idZ);
+        //yText = (TextView)findViewById(R.id.idY);
+        //jText = (TextView)findViewById(R.id.idJ);
+        //btnSend = (Button)findViewById(R.id.btnAddWorkout);
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        xText.setText("X: " + event.values[0]);
-        yText.setText("Y: " + event.values[1]);
-        zText.setText("Z: " + event.values[2]);
+        //xText.setText("X: " + event.values[0]);
+        //yText.setText("Y: " + event.values[1]);
+        //zText.setText("Z: " + event.values[2]);
 
         //werkt nog niet goed
 
-        if(event.values[2] > 9.9 || start_pushup)
+        /*if(event.values[2] > 9.9 || start_pushup)
         {
             if(event.values[2] < 9)
             {
@@ -76,7 +76,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
             {
                 start_pushup = true;
             }
-        }
+        }*/
     }
 
     @Override
@@ -87,18 +87,18 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     @Override
     protected void onStart() {
         super.onStart();
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        /*btnSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 VoegWorkoutToe();
             }
-        });
+        });*/
     }
 
     public void VoegWorkoutToe()
     {
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy");
 
         Wo.setId("3");
@@ -110,6 +110,6 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
 
         mConditionRef.child("1").child("exercise").child("push_ups").setValue(j);
 
-        Toast.makeText(getApplicationContext(), "Toegevoegd", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Toegevoegd", Toast.LENGTH_SHORT).show();*/
     }
 }
