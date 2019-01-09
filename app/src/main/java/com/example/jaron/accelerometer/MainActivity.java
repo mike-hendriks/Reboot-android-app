@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager SM;
     int i, j = 0;
     private boolean still_in_range, start_pushup = false;
-    private Button btnSend, btnSitup, btnPushup, btnOefen, btnLogin, btnRegister;
+    private Button btnSend, btnSitup, btnPushup, btnOefen, btnLogin, btnRegister, btnRoomAdding, btnResult;
     final Workout Wo = new Workout();
 
 
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btnPushup = (Button)findViewById(R.id.btnPushup);
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnRegister = (Button)findViewById(R.id.btnRegister);
+        btnRoomAdding = (Button)findViewById(R.id.btnRoomAdding);
+        btnResult = (Button)findViewById(R.id.btnResult);
     }
 
     @Override
@@ -161,6 +163,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnRoomAdding.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RoomAddingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnResult.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                 startActivity(intent);
             }
         });
