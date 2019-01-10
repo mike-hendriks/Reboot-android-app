@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager SM;
     int i, j = 0;
     private boolean still_in_range, start_pushup = false;
-    private Button btnSend, btnSitup, btnPushup, btnOefen, btnLogin, btnRegister, btnRoomAdding, btnResult;
+    private Button btnSend, btnSitup, btnPushup, btnOefen, btnLogin, btnRegister, btnRoomAdding, btnResult, btnLoad;
     final Workout Wo = new Workout();
 
 
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btnRegister = (Button)findViewById(R.id.btnRegister);
         btnRoomAdding = (Button)findViewById(R.id.btnRoomAdding);
         btnResult = (Button)findViewById(R.id.btnResult);
+        btnLoad = (Button)findViewById(R.id.laadKnop);
     }
 
     @Override
@@ -187,6 +188,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(intent);
             }
         });
+
+        btnLoad.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoadActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     public void VoegWorkoutToe()
