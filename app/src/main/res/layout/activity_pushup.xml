@@ -23,7 +23,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/idJ"
+        android:id="@+id/pushup"
         android:layout_width="62dp"
         android:layout_height="57dp"
         android:layout_marginStart="8dp"
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idJ" />
+        app:layout_constraintTop_toBottomOf="@+id/pushup" />
 
     <TextView
         android:id="@+id/idJ7"
@@ -112,7 +112,7 @@
         android:gravity="center"
         android:text="Tijd over"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/idJ"
+        app:layout_constraintBottom_toTopOf="@+id/pushup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"

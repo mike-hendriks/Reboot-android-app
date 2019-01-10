@@ -27,13 +27,12 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
 
-    /*private TextView xText, yText, zText, iText;
+    private TextView situp;
     private Sensor mySensor;
     private SensorManager SM;
     int i = 0;
     private boolean still_in_range;
-    private Button btnSend;
-    final Workout Wo = new Workout();*/
+    //final Workout Wo = new Workout();*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,34 +43,27 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         );
         setContentView(R.layout.activity_situp);
 
-        /*SM = (SensorManager)getSystemService(SENSOR_SERVICE);
+        SM = (SensorManager)getSystemService(SENSOR_SERVICE);
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
-        xText = (TextView)findViewById(R.id.idX);
-        zText = (TextView)findViewById(R.id.idZ);
-        yText = (TextView)findViewById(R.id.idY);
-        iText = (TextView)findViewById(R.id.idI);
-        btnSend = (Button)findViewById(R.id.btnAddWorkout);*/
+        situp = (TextView)findViewById(R.id.situp);
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        /*xText.setText("X: " + event.values[0]);
-        yText.setText("Y: " + event.values[1]);
-        zText.setText("Z: " + event.values[2]);
 
         if(event.values[1] > 9){
 
             if(still_in_range == false) {
                 i++;
-                iText.setText(String.valueOf(i));
+                situp.setText(String.valueOf(i));
                 mConditionRef.child("1").child("exercise").child("sit_ups").setValue(i);
                 still_in_range = true;
             }
         }else {
             still_in_range = false;
-        }*/
+        }
     }
 
     @Override

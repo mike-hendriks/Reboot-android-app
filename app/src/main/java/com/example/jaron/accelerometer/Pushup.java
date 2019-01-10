@@ -27,12 +27,11 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
 
-    //private TextView xText, yText, zText, jText;
-    //private Sensor mySensor;
-    //private SensorManager SM;
-    //int j = 0;
-    //private boolean start_pushup = false;
-    //private Button btnSend;
+    private TextView pushup;
+    private Sensor mySensor;
+    private SensorManager SM;
+    int j = 0;
+    private boolean start_pushup = false;
     //final Workout Wo = new Workout();
 
     @Override
@@ -44,31 +43,22 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         );
         setContentView(R.layout.activity_pushup);
 
-        //SM = (SensorManager)getSystemService(SENSOR_SERVICE);
-        //mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        //SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        SM = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
-        //xText = (TextView)findViewById(R.id.idX);
-        //zText = (TextView)findViewById(R.id.idZ);
-        //yText = (TextView)findViewById(R.id.idY);
-        //jText = (TextView)findViewById(R.id.idJ);
-        //btnSend = (Button)findViewById(R.id.btnAddWorkout);
+        pushup = (TextView)findViewById(R.id.pushup);
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        //xText.setText("X: " + event.values[0]);
-        //yText.setText("Y: " + event.values[1]);
-        //zText.setText("Z: " + event.values[2]);
 
-        //werkt nog niet goed
-
-        /*if(event.values[2] > 9.9 || start_pushup)
+        if(event.values[2] > 9.9 || start_pushup)
         {
             if(event.values[2] < 9)
             {
                 j++;
-                jText.setText(String.valueOf(j));
+                pushup.setText(String.valueOf(j));
                 mConditionRef.child("1").child("exercise").child("push_ups").setValue(j);
                 start_pushup = false;
             }
@@ -76,7 +66,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
             {
                 start_pushup = true;
             }
-        }*/
+        }
     }
 
     @Override
