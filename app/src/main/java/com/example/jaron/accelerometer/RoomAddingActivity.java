@@ -7,8 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class RoomAddingActivity extends AppCompatActivity {
 
+    private DatabaseReference mDatabase;
     Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonCancel, buttonDelete;
     TextView digit1, digit2, digit3, digit4;
     String code;
@@ -17,6 +21,9 @@ public class RoomAddingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_adding);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = mDatabase.child("workout");
 
         button0 = (Button)findViewById(R.id.button0);
         button1 = (Button)findViewById(R.id.button1);
@@ -148,7 +155,6 @@ public class RoomAddingActivity extends AppCompatActivity {
             digit4.setText("" + digit);
             code += digit;
         }
-
         //vergelijken met de database of de code klopt. Vervolgens doorgaan naar workout
         /*if(code == #Databasecode)
         {
@@ -173,3 +179,5 @@ public class RoomAddingActivity extends AppCompatActivity {
         code = "";
     }
 }
+
+
