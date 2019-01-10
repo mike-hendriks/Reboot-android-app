@@ -84,12 +84,12 @@
         app:layout_constraintTop_toBottomOf="@+id/txtOxigym" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/Registeren"
         android:layout_width="262dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="72dp"
-        android:layout_marginEnd="8dp"
         android:backgroundTint="#00AEC1"
         android:bottomLeftRadius="150dp"
         android:bottomRightRadius="150dp"
@@ -101,7 +101,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintTop_toBottomOf="@+id/Wachtwoord" />
 
     <TextView
         android:id="@+id/textView5"
@@ -127,10 +127,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/Gebruikersnaam" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/Gebruikersnaam"
         android:layout_width="253dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -144,7 +144,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/Email"
         android:layout_width="252dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -170,10 +170,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.202"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/Email" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/Wachtwoord"
         android:layout_width="252dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
