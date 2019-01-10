@@ -9,18 +9,14 @@ import android.icu.util.Calendar;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         zText = (TextView)findViewById(R.id.idZ);
         yText = (TextView)findViewById(R.id.idY);
         iText = (TextView)findViewById(R.id.idI);
-        jText = (TextView)findViewById(R.id.idJ);
+        jText = (TextView)findViewById(R.id.pushup);
         btnSend = (Button)findViewById(R.id.btnAddWorkout);
         btnSitup = (Button)findViewById(R.id.btnSitup);
         btnPushup = (Button)findViewById(R.id.btnPushup);
