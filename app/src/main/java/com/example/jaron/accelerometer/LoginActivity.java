@@ -38,8 +38,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail = findViewById(R.id.Gebruikersnaam);
-        editTextPassword = findViewById(R.id.Email);
+        editTextEmail = findViewById(R.id.Email);
+        editTextPassword = findViewById(R.id.Wachtwoord);
         findViewById(R.id.Login).setOnClickListener(this);
 
         NieuwAccount = (TextView)findViewById(R.id.NieuwAccount);

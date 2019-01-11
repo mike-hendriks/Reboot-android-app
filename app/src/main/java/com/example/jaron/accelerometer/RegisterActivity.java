@@ -90,6 +90,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Gelukt", Toast.LENGTH_SHORT).show();
                     SchrijfUserNaarFireStore();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
                 else{
 
@@ -131,8 +133,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()){
             case R.id.Registeren:
                 RegistreerUser();
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
                 break;
         }
     }
