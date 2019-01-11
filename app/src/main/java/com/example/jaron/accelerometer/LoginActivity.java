@@ -61,20 +61,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("Vul een goed email adres in");
-            editTextPassword.requestFocus();
-            return;
-        }
-
         if (password.isEmpty()) {
             editTextPassword.setError("Wachtwoord is nodig");
-            editTextPassword.requestFocus();
-            return;
-        }
-
-        if (password.length() < 6) {
-            editTextPassword.setError("Minimale lengte van het wachtwoord moet 6 zijn");
             editTextPassword.requestFocus();
             return;
         }

@@ -1,14 +1,28 @@
 package com.example.jaron.accelerometer;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Document;
 
 public class RoomAddingActivity extends AppCompatActivity {
 
@@ -16,6 +30,7 @@ public class RoomAddingActivity extends AppCompatActivity {
     Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonCancel, buttonDelete;
     TextView digit1, digit2, digit3, digit4;
     String code;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +150,7 @@ public class RoomAddingActivity extends AppCompatActivity {
         if(digit1.getText().equals("__"))
         {
             digit1.setText("" + digit);
-            code += digit;
+            code = "" + digit;
             return;
         }
         else if(digit2.getText().equals("__"))
@@ -154,12 +169,29 @@ public class RoomAddingActivity extends AppCompatActivity {
         {
             digit4.setText("" + digit);
             code += digit;
+
+            //db.collection("workout").whereEqualTo("code", code).get()
+            db.collection("workout")
+                    .whereEqualTo("code", Integer.parseInt(code))
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful())
+                            {
+                                for(QueryDocumentSnapshot document : task.getResult())
+                                {
+                                    Intent intent = new Intent(RoomAddingActivity.this, LoadActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "Geen workout gevonden met deze code.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
-        //vergelijken met de database of de code klopt. Vervolgens doorgaan naar workout
-        /*if(code == #Databasecode)
-        {
-            Intent intent = new Intent(this, )
-        }*/
         else
         {
             digit1.setText("__");

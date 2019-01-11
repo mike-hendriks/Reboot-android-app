@@ -53,16 +53,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String password = editTextPassword.getText().toString().trim();
         String gebruikersnaam = editTextGebruikersnaam.getText().toString().trim();
 
-        if (email.isEmpty()){
-            editTextEmail.setError("E-mail is nodig");
-            editTextPassword.requestFocus();
-            return;
-        }
-
         if (gebruikersnaam.isEmpty())
         {
             editTextGebruikersnaam.setError("Gebruikersnaam is nodig");
             editTextGebruikersnaam.requestFocus();
+            return;
+        }
+
+        if (email.isEmpty()){
+            editTextEmail.setError("E-mail is nodig");
+            editTextPassword.requestFocus();
             return;
         }
 
