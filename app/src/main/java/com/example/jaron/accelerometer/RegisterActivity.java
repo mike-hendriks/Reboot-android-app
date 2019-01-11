@@ -113,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Map<String, Object> user = new HashMap<>();
         user.put("email", currentFireBaseUser.getEmail());
         user.put("fullname", editTextGebruikersnaam.getText().toString().trim());
+        user.put("points", 0);
 
         db.collection("user").document(currentFireBaseUser.getUid())
                 .set(user)
