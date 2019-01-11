@@ -5,6 +5,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.icu.util.Calendar;
+import android.media.MediaPlayer;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.Random;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,13 +31,17 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
 
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
-
-    private TextView pushup;
+    private static final long START_TIME_IN_MILLIS = 60000;
+    private TextView pushup, PushupTijd;
     private Sensor mySensor;
     private SensorManager SM;
     int j = 0;
     private boolean start_pushup = false;
     //final Workout Wo = new Workout();
+
+    private CountDownTimer mCountDownTimer;
+    private boolean mTimerRunning;
+    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +57,11 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         pushup = (TextView)findViewById(R.id.pushup);
-    }
 
+        PushupTijd = findViewById(R.id.Pushuptijd);
+        startTimer();
+        updateCountDownText();
+    }
     @Override
     public void onSensorChanged(SensorEvent event) {
 
@@ -84,6 +96,32 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
                 VoegWorkoutToe();
             }
         });*/
+    }
+
+    private void startTimer() {
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                mTimerRunning = false;
+            }
+        }.start();
+
+        mTimerRunning = true;
+    }
+
+    private void updateCountDownText() {
+        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        PushupTijd.setText(timeLeftFormatted);
     }
 
     public void VoegWorkoutToe()

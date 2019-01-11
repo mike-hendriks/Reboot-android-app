@@ -5,6 +5,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.icu.util.Calendar;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,13 +28,17 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
 
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
-
-    private TextView situp;
+    private static final long START_TIME_IN_MILLIS = 60000;
+    private TextView situp, SitupTijd;
     private Sensor mySensor;
     private SensorManager SM;
     int i = 0;
     private boolean still_in_range;
     //final Workout Wo = new Workout();*/
+
+    private CountDownTimer mCountDownTimer;
+    private boolean mTimerRunning;
+    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,10 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         situp = (TextView)findViewById(R.id.situp);
+
+        SitupTijd = findViewById(R.id.SitupTijd);
+        startTimer();
+        updateCountDownText();
     }
 
     @Override
@@ -80,6 +90,32 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
                 VoegWorkoutToe();
             }
         });*/
+    }
+
+    private void startTimer() {
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                mTimerRunning = false;
+            }
+        }.start();
+
+        mTimerRunning = true;
+    }
+
+    private void updateCountDownText() {
+        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        SitupTijd.setText(timeLeftFormatted);
     }
 
     public void VoegWorkoutToe()
