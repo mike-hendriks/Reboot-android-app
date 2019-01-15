@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class LoadActivity extends AppCompatActivity {
 
-    private Button Cancel;
+    private Button Cancel, Doorgaan;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -34,7 +34,15 @@ public class LoadActivity extends AppCompatActivity {
             }
         });
 
-        WritePointToFirestore();
+        Doorgaan = (Button) findViewById(R.id.Doorgaan);
+        Doorgaan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnDoorgaan();
+            }
+        });
+
+        //WritePointToFirestore();
     }
 
     private void btnCancel() {
@@ -42,30 +50,35 @@ public class LoadActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void WritePointToFirestore()
-    {
-        FirebaseUser currentFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        Map<String, Object> point = new HashMap<>();
-        point.put("exercise_id", "push ups");
-        point.put("point", 10);
-        point.put("rep", 10);
-        point.put("user_id", currentFireBaseUser.getUid());
-        point.put("workout_id", "234");
-
-        db.collection("point").document()
-                .set(point)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
+    private void btnDoorgaan() {
+        Intent intent = new Intent(this, Situp.class);
+        startActivity(intent);
     }
+
+//    private void WritePointToFirestore()
+//    {
+//        FirebaseUser currentFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        Map<String, Object> point = new HashMap<>();
+//        point.put("exercise_id", "push ups");
+//        point.put("point", 10);
+//        point.put("rep", 10);
+//        point.put("user_id", currentFireBaseUser.getUid());
+//        point.put("workout_id", "234");
+//
+//        db.collection("point").document()
+//                .set(point)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                    }
+//                });
+//    }
 
 
 }

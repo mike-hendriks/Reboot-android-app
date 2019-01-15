@@ -1,5 +1,6 @@
 package com.example.jaron.accelerometer;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,19 +16,30 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Situp extends AppCompatActivity  implements SensorEventListener {
 
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final long START_TIME_IN_MILLIS = 60000;
     private TextView situp, SitupTijd;
     private Sensor mySensor;
@@ -102,7 +114,12 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
 
             @Override
             public void onFinish() {
+
                 mTimerRunning = false;
+                WritePointToFirestore();
+                WriteMessage();
+                Intent intent = new Intent(Situp.this, ResultActivity.class);
+                startActivity(intent);
             }
         }.start();
 
@@ -116,6 +133,47 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
         SitupTijd.setText(timeLeftFormatted);
+    }
+
+    private void WritePointToFirestore()
+    {
+
+        FirebaseUser currentFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        Map<String, Object> point = new HashMap<>();
+        point.put("exercise_id", "Sit up");
+        point.put("point", i);
+        point.put("rep", i);
+        point.put("user_id", currentFireBaseUser.getUid());
+        point.put("workout_id", "234");
+
+        db.collection("point").document()
+                .set(point)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+    }
+
+    public void WriteMessage(){
+
+        String Message = situp.getText().toString();
+        String file_name = "hello_file";
+        try {
+            FileOutputStream fileOutputStream = openFileOutput(file_name, MODE_PRIVATE);
+            fileOutputStream.write(Message.getBytes());
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void VoegWorkoutToe()
