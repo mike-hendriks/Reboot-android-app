@@ -1,5 +1,6 @@
 package com.example.jaron.accelerometer;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -33,6 +34,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     DatabaseReference mConditionRef = mRootRef.child("workout");
     private static final long START_TIME_IN_MILLIS = 60000;
     private TextView pushup, PushupTijd;
+    private Button stop;
     private Sensor mySensor;
     private SensorManager SM;
     int j = 0;
@@ -57,6 +59,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         pushup = (TextView)findViewById(R.id.pushup);
+        stop = (Button)findViewById(R.id.stopButton);
 
         PushupTijd = findViewById(R.id.Pushuptijd);
         startTimer();
@@ -89,13 +92,15 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     @Override
     protected void onStart() {
         super.onStart();
-        /*btnSend.setOnClickListener(new View.OnClickListener() {
+        stop.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                VoegWorkoutToe();
+                Intent intent = new Intent(Pushup.this, ResultActivity.class);
+                intent.putExtra("Reps", j);
+                startActivity(intent);
             }
-        });*/
+        });
     }
 
     private void startTimer() {
@@ -122,22 +127,12 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
         PushupTijd.setText(timeLeftFormatted);
-    }
 
-    public void VoegWorkoutToe()
-    {
-        /*Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy");
-
-        Wo.setId("3");
-        Wo.setDate(mdformat.format(calendar.getTime()));
-        Wo.setExercise("");
-
-        Workout workout = new Workout(Wo.getId(), Wo.getDate(), Wo.getExercise());
-        mConditionRef.child("1").setValue(workout);
-
-        mConditionRef.child("1").child("exercise").child("push_ups").setValue(j);
-
-        Toast.makeText(getApplicationContext(), "Toegevoegd", Toast.LENGTH_SHORT).show();*/
+        if(minutes == 0 && seconds == 0)
+        {
+            Intent intent = new Intent(Pushup.this, ResultActivity.class);
+            intent.putExtra("Reps", j);
+            startActivity(intent);
+        }
     }
 }

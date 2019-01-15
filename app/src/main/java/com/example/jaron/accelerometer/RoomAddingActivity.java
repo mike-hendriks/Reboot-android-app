@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,15 +13,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Document;
 
 public class RoomAddingActivity extends AppCompatActivity {
 
@@ -42,7 +35,7 @@ public class RoomAddingActivity extends AppCompatActivity {
 
         button0 = (Button)findViewById(R.id.button0);
         button1 = (Button)findViewById(R.id.button1);
-        button2 = (Button)findViewById(R.id.button2);
+        button2 = (Button)findViewById(R.id.stopButton);
         button3 = (Button)findViewById(R.id.button3);
         button4 = (Button)findViewById(R.id.button4);
         button5 = (Button)findViewById(R.id.button5);
@@ -182,6 +175,7 @@ public class RoomAddingActivity extends AppCompatActivity {
                                 for(QueryDocumentSnapshot document : task.getResult())
                                 {
                                     Intent intent = new Intent(RoomAddingActivity.this, LoadActivity.class);
+                                    intent.putExtra("workout_id", document.getId());
                                     startActivity(intent);
                                 }
                             }
@@ -191,9 +185,6 @@ public class RoomAddingActivity extends AppCompatActivity {
                             }
                         }
                     });
-        }
-        else
-        {
             digit1.setText("__");
             digit2.setText("__");
             digit3.setText("__");
