@@ -31,6 +31,7 @@ public class LoadActivity extends AppCompatActivity {
 
     private Button Cancel;
     String workout_id, exercise;
+    DocumentReference ref;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -79,8 +80,8 @@ public class LoadActivity extends AppCompatActivity {
                                 point.put("user_id", currentFireBaseUser.getUid());
                                 point.put("workout_id", workout_id);
 
-                                db.collection("point").document()
-                                        .set(point)
+                                ref = db.collection("point").document();
+                                        ref.set(point)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
@@ -93,20 +94,21 @@ public class LoadActivity extends AppCompatActivity {
                                                             if(exercise.equals("pushups"))
                                                             {
                                                                 Intent intent = new Intent(LoadActivity.this, Pushup.class);
-                                                                intent.putExtra("workout_id", workout_id);
+                                                                intent.putExtra("point_id", ref.getId());
                                                                 finish();
                                                                 startActivity(intent);
                                                             }
                                                             else if(exercise.equals("situps"))
                                                             {
                                                                 Intent intent = new Intent(LoadActivity.this, Situp.class);
-                                                                intent.putExtra("workout_id", workout_id);
+                                                                intent.putExtra("point_id", ref.getId());
                                                                 finish();
                                                                 startActivity(intent);
                                                             }
                                                         }
                                                     }
                                                 });
+
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {

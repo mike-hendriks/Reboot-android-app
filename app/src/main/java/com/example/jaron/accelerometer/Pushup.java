@@ -6,23 +6,17 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.CountDownTimer;;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.Locale;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 public class Pushup extends AppCompatActivity  implements SensorEventListener{
 
@@ -30,6 +24,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     DatabaseReference mConditionRef = mRootRef.child("workout");
 
     private static final long START_TIME_IN_MILLIS = 60000;
+    private static boolean sensorUpdateEnabled = false;
     private TextView pushup, PushupTijd;
     private Button stop;
     private Sensor mySensor;
@@ -40,7 +35,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CountDownTimer mCountDownTimer;
-    String workout_id;
+    String point_id;
     private boolean mTimerRunning;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
@@ -57,7 +52,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
-        workout_id = getIntent().getStringExtra("workout_id");
+        point_id = getIntent().getStringExtra("point_id");
 
         pushup = (TextView)findViewById(R.id.pushup);
         stop = (Button)findViewById(R.id.stopButton);
@@ -68,6 +63,10 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     }
     @Override
     public void onSensorChanged(SensorEvent event) {
+        if(!sensorUpdateEnabled)
+        {
+            SM.unregisterListener(this, mySensor);
+        }
 
         if(event.values[2] > 9.9 || start_pushup)
         {
@@ -140,23 +139,9 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     }
 
     private void WritePointToFirestore() {
-        db.collection("point")
-                .whereEqualTo("workout_id", workout_id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                db.collection("point").document(document.getId()).update(
-                                        "point", j,
-                                        "rep", j
-                                );
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Geen workout gevonden met deze code.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        db.collection("point").document(point_id).update(
+                "point", j,
+                "rep", j
+        );
     }
 }

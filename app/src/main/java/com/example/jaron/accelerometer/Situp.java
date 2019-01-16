@@ -32,7 +32,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
     private SensorManager SM;
 
     private int i = 0;
-    private String workout_id;
+    private String point_id;
     private boolean still_in_range;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -54,7 +54,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
-        workout_id = getIntent().getStringExtra("workout_id");
+        point_id = getIntent().getStringExtra("point_id");
 
         situp = (TextView)findViewById(R.id.situp);
         stop = (Button)findViewById(R.id.stopButton);
@@ -93,6 +93,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
             public void onClick(View v) {
                 Intent intent = new Intent(Situp.this, ResultActivity.class);
                 intent.putExtra("Reps", i);
+                finish();
                 startActivity(intent);
             }
         });
@@ -127,28 +128,15 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         {
             Intent intent = new Intent(Situp.this, ResultActivity.class);
             intent.putExtra("Reps", i);
+            finish();
             startActivity(intent);
         }
     }
 
     private void WritePointToFirestore() {
-        db.collection("point")
-                .whereEqualTo("workout_id", workout_id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                db.collection("point").document(document.getId()).update(
-                                        "point", i,
-                                        "rep", i
-                                );
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Geen workout gevonden met deze code.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        db.collection("point").document(point_id).update(
+                "point", i,
+                "rep", i
+        );
     }
 }
