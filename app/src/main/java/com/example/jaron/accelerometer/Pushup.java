@@ -5,10 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.icu.util.Calendar;
-import android.media.MediaPlayer;
-import android.os.CountDownTimer;
-import android.os.Handler;
+import android.os.CountDownTimer;;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,46 +14,21 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-<<<<<<< HEAD
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import javax.annotation.Nullable;
-
-public class Pushup extends AppCompatActivity  implements SensorEventListener{
-
-=======
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Pushup extends AppCompatActivity  implements SensorEventListener{
 
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
-//    FirebaseFirestore db = FirebaseFirestore.getInstance();
->>>>>>> e6b1053f0de0d3b58bff2934252a68dc3913d1c9
+
     private static final long START_TIME_IN_MILLIS = 60000;
     private TextView pushup, PushupTijd;
     private Button stop;
