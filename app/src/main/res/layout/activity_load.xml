@@ -47,7 +47,6 @@
         android:layout_marginTop="120dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="#EBEBEB"
-        android:backgroundTintMode="#EBEBEB"
         android:progressBackgroundTint="#EBEBEB"
         android:progressTint="@color/colorAccentGreenDark"
         app:layout_constraintEnd_toEndOf="parent"
