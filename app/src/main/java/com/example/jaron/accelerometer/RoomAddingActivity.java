@@ -163,7 +163,6 @@ public class RoomAddingActivity extends AppCompatActivity {
             digit4.setText("" + digit);
             code += digit;
 
-            //db.collection("workout").whereEqualTo("code", code).get()
             db.collection("workout")
                     .whereEqualTo("code", Integer.parseInt(code))
                     .get()

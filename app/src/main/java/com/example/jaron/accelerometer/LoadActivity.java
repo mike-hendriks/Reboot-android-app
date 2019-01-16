@@ -73,8 +73,8 @@ public class LoadActivity extends AppCompatActivity {
 
                                 Map<String, Object> point = new HashMap<>();
                                 point.put("exercise_id", exercise);
-                                point.put("point", 10);
-                                point.put("rep", 10);
+                                point.put("point", 0);
+                                point.put("rep", 0);
                                 //point.put("user_id", currentFireBaseUser.getUid());
                                 point.put("workout_id", workout_id);
 
@@ -92,11 +92,13 @@ public class LoadActivity extends AppCompatActivity {
                                                             if(exercise.equals("pushups"))
                                                             {
                                                                 Intent intent = new Intent(LoadActivity.this, Pushup.class);
+                                                                intent.putExtra("workout_id", workout_id);
                                                                 startActivity(intent);
                                                             }
                                                             else if(exercise.equals("situps"))
                                                             {
                                                                 Intent intent = new Intent(LoadActivity.this, Situp.class);
+                                                                intent.putExtra("workout_id", workout_id);
                                                                 startActivity(intent);
                                                             }
                                                         }

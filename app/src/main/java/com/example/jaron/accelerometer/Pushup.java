@@ -19,19 +19,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import javax.annotation.Nullable;
 
 public class Pushup extends AppCompatActivity  implements SensorEventListener{
 
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mConditionRef = mRootRef.child("workout");
     private static final long START_TIME_IN_MILLIS = 60000;
     private TextView pushup, PushupTijd;
     private Button stop;
@@ -39,9 +54,11 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     private SensorManager SM;
     int j = 0;
     private boolean start_pushup = false;
-    //final Workout Wo = new Workout();
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CountDownTimer mCountDownTimer;
+    String workout_id;
     private boolean mTimerRunning;
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
@@ -57,6 +74,8 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         SM = (SensorManager)getSystemService(SENSOR_SERVICE);
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        workout_id = getIntent().getStringExtra("workout_id");
 
         pushup = (TextView)findViewById(R.id.pushup);
         stop = (Button)findViewById(R.id.stopButton);
@@ -74,7 +93,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
             {
                 j++;
                 pushup.setText(String.valueOf(j));
-                mConditionRef.child("1").child("exercise").child("push_ups").setValue(j);
+                WritePointToFirestore();
                 start_pushup = false;
             }
             else
@@ -134,5 +153,26 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
             intent.putExtra("Reps", j);
             startActivity(intent);
         }
+    }
+
+    private void WritePointToFirestore() {
+        db.collection("point")
+                .whereEqualTo("workout_id", workout_id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.collection("point").document(document.getId()).update(
+                                        "point", j,
+                                        "rep", j
+                                );
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Geen workout gevonden met deze code.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

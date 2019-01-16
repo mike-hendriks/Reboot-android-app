@@ -19,24 +19,31 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Situp extends AppCompatActivity  implements SensorEventListener {
 
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference mConditionRef = mRootRef.child("workout");
     private static final long START_TIME_IN_MILLIS = 60000;
+
     private TextView situp, SitupTijd;
     private Sensor mySensor;
     private Button stop;
     private SensorManager SM;
-    int i = 0;
+
+    private int i = 0;
+    private String workout_id;
     private boolean still_in_range;
-    //final Workout Wo = new Workout();*/
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
@@ -55,6 +62,8 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+        workout_id = getIntent().getStringExtra("workout_id");
+
         situp = (TextView)findViewById(R.id.situp);
         stop = (Button)findViewById(R.id.stopButton);
 
@@ -71,7 +80,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
             if(still_in_range == false) {
                 i++;
                 situp.setText(String.valueOf(i));
-                mConditionRef.child("1").child("exercise").child("sit_ups").setValue(i);
+                WritePointToFirestore();
                 still_in_range = true;
             }
         }else {
@@ -128,5 +137,26 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
             intent.putExtra("Reps", i);
             startActivity(intent);
         }
+    }
+
+    private void WritePointToFirestore() {
+        db.collection("point")
+                .whereEqualTo("workout_id", workout_id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                db.collection("point").document(document.getId()).update(
+                                        "point", i,
+                                        "rep", i
+                                );
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Geen workout gevonden met deze code.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
