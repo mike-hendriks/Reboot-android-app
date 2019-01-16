@@ -38,24 +38,42 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progressBar1"-->
+        <!--style="?android:attr/progressBarStyleLarge"-->
+        <!--android:layout_width="110dp"-->
+        <!--android:layout_height="110dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:indeterminate="true"-->
+        <!--android:indeterminateTint="@color/colorAccentGreenDark"-->
+        <!--android:indeterminateTintMode="src_atop"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.498"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintVertical_bias="0.3" />-->
+
     <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/colorAccentGreenDark"
-        android:indeterminateTintMode="src_atop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+    android:layout_centerHorizontal="true"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.3"
+        android:indeterminateDrawable="@drawable/progressbar_custom" />
+
+
 
 </android.support.constraint.ConstraintLayout>
