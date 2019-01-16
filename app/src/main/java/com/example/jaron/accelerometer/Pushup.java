@@ -23,21 +23,22 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mConditionRef = mRootRef.child("workout");
 
-    private static final long START_TIME_IN_MILLIS = 60000;
     private static boolean sensorUpdateEnabled;
     private TextView pushup, PushupTijd;
     private Button stop;
     private Sensor mySensor;
     private SensorManager SM;
-    int j = 0;
+
+    private int j = 0;
+    private int time = 0;
+    private String point_id;
     private boolean start_pushup = false;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CountDownTimer mCountDownTimer;
-    String point_id;
     private boolean mTimerRunning;
-    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
+    private long mTimeLeftInMillis, mTimeStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,11 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
 
         point_id = getIntent().getStringExtra("point_id");
 
-        pushup = (TextView)findViewById(R.id.pushup);
+        time = getIntent().getIntExtra("time", time);
+        mTimeStart = time * 1000;
+        mTimeLeftInMillis = mTimeStart;
+
+                pushup = (TextView)findViewById(R.id.pushup);
         stop = (Button)findViewById(R.id.stopButton);
 
         PushupTijd = findViewById(R.id.Pushuptijd);
@@ -101,7 +106,13 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
             public void onClick(View v) {
                 Intent intent = new Intent(Pushup.this, ResultActivity.class);
                 intent.putExtra("Reps", j);
+                intent.putExtra("time", mTimeStart - mTimeLeftInMillis);
+
+                mCountDownTimer.cancel();
+                mCountDownTimer = null;
+                mTimerRunning = false;
                 sensorUpdateEnabled = false;
+
                 finish();
                 startActivity(intent);
             }
@@ -137,6 +148,8 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         {
             Intent intent = new Intent(Pushup.this, ResultActivity.class);
             intent.putExtra("Reps", j);
+            intent.putExtra("time", mTimeStart);
+            mTimerRunning = false;
             sensorUpdateEnabled = false;
             finish();
             startActivity(intent);
