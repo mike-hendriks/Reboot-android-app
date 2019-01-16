@@ -25,6 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class Situp extends AppCompatActivity  implements SensorEventListener {
 
     private static final long START_TIME_IN_MILLIS = 60000;
+    private static boolean sensorUpdateEnabled;
 
     private TextView situp, SitupTijd;
     private Sensor mySensor;
@@ -60,12 +61,19 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         stop = (Button)findViewById(R.id.stopButton);
 
         SitupTijd = findViewById(R.id.SitupTijd);
+
+        sensorUpdateEnabled = true;
+
         startTimer();
         updateCountDownText();
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        if(!sensorUpdateEnabled)
+        {
+            SM.unregisterListener(this, mySensor);
+        }
 
         if(event.values[1] > 9){
 
@@ -93,6 +101,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
             public void onClick(View v) {
                 Intent intent = new Intent(Situp.this, ResultActivity.class);
                 intent.putExtra("Reps", i);
+                sensorUpdateEnabled = false;
                 finish();
                 startActivity(intent);
             }
@@ -128,6 +137,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         {
             Intent intent = new Intent(Situp.this, ResultActivity.class);
             intent.putExtra("Reps", i);
+            sensorUpdateEnabled = false;
             finish();
             startActivity(intent);
         }

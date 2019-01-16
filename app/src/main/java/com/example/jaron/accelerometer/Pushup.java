@@ -24,7 +24,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
     DatabaseReference mConditionRef = mRootRef.child("workout");
 
     private static final long START_TIME_IN_MILLIS = 60000;
-    private static boolean sensorUpdateEnabled = false;
+    private static boolean sensorUpdateEnabled;
     private TextView pushup, PushupTijd;
     private Button stop;
     private Sensor mySensor;
@@ -58,6 +58,9 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         stop = (Button)findViewById(R.id.stopButton);
 
         PushupTijd = findViewById(R.id.Pushuptijd);
+
+        sensorUpdateEnabled = true;
+
         startTimer();
         updateCountDownText();
     }
@@ -98,6 +101,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
             public void onClick(View v) {
                 Intent intent = new Intent(Pushup.this, ResultActivity.class);
                 intent.putExtra("Reps", j);
+                sensorUpdateEnabled = false;
                 finish();
                 startActivity(intent);
             }
@@ -133,6 +137,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         {
             Intent intent = new Intent(Pushup.this, ResultActivity.class);
             intent.putExtra("Reps", j);
+            sensorUpdateEnabled = false;
             finish();
             startActivity(intent);
         }
