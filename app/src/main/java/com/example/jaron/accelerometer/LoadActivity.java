@@ -34,6 +34,7 @@ public class LoadActivity extends AppCompatActivity {
 
     private Button Cancel;
     String workout_id, exercise;
+    int time;
     DocumentReference ref;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -96,17 +97,50 @@ public class LoadActivity extends AppCompatActivity {
                                                         {
                                                             if(exercise.equals("pushups"))
                                                             {
-                                                                Intent intent = new Intent(LoadActivity.this, Pushup.class);
-                                                                intent.putExtra("point_id", ref.getId());
-                                                                finish();
-                                                                startActivity(intent);
+                                                                DocumentReference docRef = db.collection("exercise").document("pushups");
+                                                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            DocumentSnapshot document = task.getResult();
+                                                                            if (document.exists()) {
+                                                                                time = document.getLong("time").intValue();
+                                                                                Intent intent = new Intent(LoadActivity.this, Pushup.class);
+                                                                                intent.putExtra("point_id", ref.getId());
+                                                                                intent.putExtra("time", time);
+                                                                                finish();
+                                                                                startActivity(intent);
+
+                                                                            } else {
+                                                                            }
+                                                                        } else {
+                                                                        }
+                                                                    }
+                                                                });
+
                                                             }
                                                             else if(exercise.equals("situps"))
                                                             {
-                                                                Intent intent = new Intent(LoadActivity.this, Situp.class);
-                                                                intent.putExtra("point_id", ref.getId());
-                                                                finish();
-                                                                startActivity(intent);
+                                                                DocumentReference docRef = db.collection("exercise").document("situps");
+                                                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            DocumentSnapshot document = task.getResult();
+                                                                            if (document.exists()) {
+                                                                                time = document.getLong("time").intValue();
+                                                                                Intent intent = new Intent(LoadActivity.this, Situp.class);
+                                                                                intent.putExtra("point_id", ref.getId());
+                                                                                intent.putExtra("time", time);
+                                                                                finish();
+                                                                                startActivity(intent);
+
+                                                                            } else {
+                                                                            }
+                                                                        } else {
+                                                                        }
+                                                                    }
+                                                                });
                                                             }
                                                         }
                                                     }
@@ -129,3 +163,6 @@ public class LoadActivity extends AppCompatActivity {
                 });
     }
 }
+
+
+

@@ -11,9 +11,12 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Locale;
+
 public class ResultActivity extends AppCompatActivity {
     int reps = 0;
-    TextView result;
+    long time;
+    TextView result, timeLeft;
     ImageButton ExitResult;
 
     @Override
@@ -24,9 +27,18 @@ public class ResultActivity extends AppCompatActivity {
         FirebaseUser currentFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         reps = getIntent().getIntExtra("Reps", reps);
+        time = getIntent().getLongExtra("time", time);
 
         result = (TextView)findViewById(R.id.pushup);
+        timeLeft = (TextView)findViewById(R.id.idJ2);
+
         result.setText("" + reps);
+
+        int minutes = (int) (time / 1000) / 60;
+        int seconds = (int) (time / 1000) % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        timeLeft.setText(timeLeftFormatted);
 
         ExitResult = (ImageButton) findViewById(R.id.ExitResult);
         ExitResult.setOnClickListener(new View.OnClickListener() {

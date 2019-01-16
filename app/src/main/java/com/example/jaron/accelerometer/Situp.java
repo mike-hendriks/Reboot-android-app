@@ -24,7 +24,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class Situp extends AppCompatActivity  implements SensorEventListener {
 
-    private static final long START_TIME_IN_MILLIS = 60000;
     private static boolean sensorUpdateEnabled;
 
     private TextView situp, SitupTijd;
@@ -33,6 +32,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
     private SensorManager SM;
 
     private int i = 0;
+    private int time = 0;
     private String point_id;
     private boolean still_in_range;
 
@@ -40,7 +40,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
 
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
-    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
+    private long mTimeLeftInMillis, mTimeStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,10 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
 
         situp = (TextView)findViewById(R.id.situp);
         stop = (Button)findViewById(R.id.stopButton);
+
+        time = getIntent().getIntExtra("time", time);
+        mTimeStart = time * 1000;
+        mTimeLeftInMillis = mTimeStart;
 
         SitupTijd = findViewById(R.id.SitupTijd);
 
@@ -101,7 +105,12 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
             public void onClick(View v) {
                 Intent intent = new Intent(Situp.this, ResultActivity.class);
                 intent.putExtra("Reps", i);
+                intent.putExtra("time", mTimeStart - mTimeLeftInMillis);
+
+                mCountDownTimer.cancel();
+                mCountDownTimer = null;
                 sensorUpdateEnabled = false;
+
                 finish();
                 startActivity(intent);
             }
@@ -137,6 +146,8 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
         {
             Intent intent = new Intent(Situp.this, ResultActivity.class);
             intent.putExtra("Reps", i);
+            intent.putExtra("time", mTimeStart);
+            mTimerRunning = false;
             sensorUpdateEnabled = false;
             finish();
             startActivity(intent);
