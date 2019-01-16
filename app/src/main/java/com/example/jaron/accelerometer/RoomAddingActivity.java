@@ -133,6 +133,7 @@ public class RoomAddingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RoomAddingActivity.this, HomeActivity.class);
+                finish();
                 startActivity(intent);
             }
         });
@@ -176,6 +177,7 @@ public class RoomAddingActivity extends AppCompatActivity {
                                 {
                                     Intent intent = new Intent(RoomAddingActivity.this, LoadActivity.class);
                                     intent.putExtra("workout_id", document.getId());
+                                    finish();
                                     startActivity(intent);
                                 }
                             }
