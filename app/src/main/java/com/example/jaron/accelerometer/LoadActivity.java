@@ -53,6 +53,7 @@ public class LoadActivity extends AppCompatActivity {
 
     private void btnCancel() {
         Intent intent = new Intent(this, HomeActivity.class);
+        finish();
         startActivity(intent);
     }
 
@@ -69,13 +70,17 @@ public class LoadActivity extends AppCompatActivity {
                             for(QueryDocumentSnapshot document : task.getResult())
                             {
                                 exercise = document.getString("exercise_id");
-                                //FirebaseUser currentFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                FirebaseUser currentFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
                                 Map<String, Object> point = new HashMap<>();
                                 point.put("exercise_id", exercise);
                                 point.put("point", 0);
                                 point.put("rep", 0);
+<<<<<<< HEAD
                                 //point.put("user_id", currentFireBaseUser.getUid());
+=======
+                                point.put("user_id", currentFireBaseUser.getUid());
+>>>>>>> e6b1053f0de0d3b58bff2934252a68dc3913d1c9
                                 point.put("workout_id", workout_id);
 
                                 db.collection("point").document()
@@ -92,13 +97,21 @@ public class LoadActivity extends AppCompatActivity {
                                                             if(exercise.equals("pushups"))
                                                             {
                                                                 Intent intent = new Intent(LoadActivity.this, Pushup.class);
+<<<<<<< HEAD
                                                                 intent.putExtra("workout_id", workout_id);
+=======
+                                                                finish();
+>>>>>>> e6b1053f0de0d3b58bff2934252a68dc3913d1c9
                                                                 startActivity(intent);
                                                             }
                                                             else if(exercise.equals("situps"))
                                                             {
                                                                 Intent intent = new Intent(LoadActivity.this, Situp.class);
+<<<<<<< HEAD
                                                                 intent.putExtra("workout_id", workout_id);
+=======
+                                                                finish();
+>>>>>>> e6b1053f0de0d3b58bff2934252a68dc3913d1c9
                                                                 startActivity(intent);
                                                             }
                                                         }

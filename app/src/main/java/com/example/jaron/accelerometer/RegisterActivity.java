@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     EditText editTextEmail, editTextPassword, editTextGebruikersnaam;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private TextView ToLogin;
 
     private FirebaseAuth mAuth;
     @Override
@@ -46,6 +48,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.Registeren).setOnClickListener(this);
+
+        ToLogin = (TextView)findViewById(R.id.ToLogin);
+        ToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenLoginActivity();
+            }
+        });
     }
 
     private void RegistreerUser () {
@@ -88,9 +98,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "Gelukt", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Geregistreerd!", Toast.LENGTH_SHORT).show();
                     SchrijfUserNaarFireStore();
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
                 else{
@@ -136,5 +146,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 RegistreerUser();
                 break;
         }
+    }
+
+    public void OpenLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }

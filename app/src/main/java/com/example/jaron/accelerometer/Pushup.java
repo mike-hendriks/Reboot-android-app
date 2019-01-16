@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+<<<<<<< HEAD
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -47,6 +48,15 @@ import javax.annotation.Nullable;
 
 public class Pushup extends AppCompatActivity  implements SensorEventListener{
 
+=======
+import com.google.firebase.firestore.FirebaseFirestore;
+
+public class Pushup extends AppCompatActivity  implements SensorEventListener{
+
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mConditionRef = mRootRef.child("workout");
+//    FirebaseFirestore db = FirebaseFirestore.getInstance();
+>>>>>>> e6b1053f0de0d3b58bff2934252a68dc3913d1c9
     private static final long START_TIME_IN_MILLIS = 60000;
     private TextView pushup, PushupTijd;
     private Button stop;
@@ -117,6 +127,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
             public void onClick(View v) {
                 Intent intent = new Intent(Pushup.this, ResultActivity.class);
                 intent.putExtra("Reps", j);
+                finish();
                 startActivity(intent);
             }
         });
@@ -151,6 +162,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
         {
             Intent intent = new Intent(Pushup.this, ResultActivity.class);
             intent.putExtra("Reps", j);
+            finish();
             startActivity(intent);
         }
     }

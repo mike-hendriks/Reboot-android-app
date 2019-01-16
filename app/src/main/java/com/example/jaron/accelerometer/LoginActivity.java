@@ -51,6 +51,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //if the user is already signed in
+        //we will close this activity
+        //and take the user to profile activity
+        if (mAuth.getCurrentUser() != null) {
+            finish();
+            startActivity(new Intent(this, HomeActivity.class));
+            Toast.makeText(this, "already logged in", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void userlogin() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
