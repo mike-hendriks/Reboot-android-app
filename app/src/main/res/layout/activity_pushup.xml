@@ -24,8 +24,8 @@
 
     <TextView
         android:id="@+id/pushup"
-        android:layout_width="62dp"
-        android:layout_height="57dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
@@ -91,10 +91,10 @@
     <TextView
         android:id="@+id/Pushuptijd"
         android:layout_width="wrap_content"
-        android:layout_height="57dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
         android:text="00:00"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
