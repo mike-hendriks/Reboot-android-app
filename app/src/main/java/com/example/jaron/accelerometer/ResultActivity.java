@@ -1,12 +1,17 @@
 package com.example.jaron.accelerometer;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class ResultActivity extends AppCompatActivity {
     int reps = 0;
     TextView result;
+    ImageButton ExitResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +23,19 @@ public class ResultActivity extends AppCompatActivity {
         result = (TextView)findViewById(R.id.pushup);
 
         result.setText("" + reps);
+
+        ExitResult = (ImageButton) findViewById(R.id.ExitResult);
+        ExitResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExitResult();
+            }
+        });
+    }
+
+    private void ExitResult() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        finish();
+        startActivity(intent);
     }
 }
