@@ -78,6 +78,7 @@ public class Pushup extends AppCompatActivity  implements SensorEventListener{
 
         if(event.values[2] > 9.9 || start_pushup)
         {
+
             if(event.values[2] < 9)
             {
                 j++;
