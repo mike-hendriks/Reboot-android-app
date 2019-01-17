@@ -17,8 +17,9 @@
 
         <gradient
             android:centerColor="@color/colorAccentGreenDark"
-            android:centerY="30%"
-            android:centerX="35"
+            android:centerY="45%"
+            android:centerX="45%"
+            android:gradientRadius="250"
             android:endColor="#00ffffff"
             android:startColor="@color/colorAccentGreen"
             android:type="sweep"
