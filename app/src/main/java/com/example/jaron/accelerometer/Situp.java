@@ -79,7 +79,7 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
             SM.unregisterListener(this, mySensor);
         }
 
-        if(event.values[1] < 4){
+        if(event.values[1] < 3){
             still_in_range = true;
         }
         else if(still_in_range)
