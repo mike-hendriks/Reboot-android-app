@@ -79,15 +79,20 @@ public class Situp extends AppCompatActivity  implements SensorEventListener {
             SM.unregisterListener(this, mySensor);
         }
 
-        if(event.values[1] > 9){
-
-            if(still_in_range == false) {
+        if(event.values[1] < 4){
+            still_in_range = true;
+        }
+        else if(still_in_range)
+        {
+            if(event.values[1] > 7)
+            {
                 i++;
                 situp.setText(String.valueOf(i));
                 WritePointToFirestore();
-                still_in_range = true;
+                still_in_range = false;
             }
-        }else {
+        }
+        else {
             still_in_range = false;
         }
     }
